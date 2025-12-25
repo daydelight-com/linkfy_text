@@ -58,7 +58,11 @@ void main() {
       "(111)222 3333",
       "+5444333222",
       "+91 (123) 456-7890",
-      "123-456-7890"
+      "123-456-7890",
+      // ✅ Japan (hyphenated)
+      "090-1234-5678",
+      "03-1234-5678",
+      "0120-123-456",
     ];
 
     ///
@@ -94,6 +98,11 @@ void main() {
         expect(RegExp(phoneRegExp).hasMatch(phone), isTrue);
         expect(getMatchedType(phone), equals(LinkType.phone));
       }
+    });
+
+    test("Should not match date as phone", () {
+      const date = "2025-12-25";
+      expect(RegExp(phoneRegExp).hasMatch(date), isFalse);
     });
 
     test(
