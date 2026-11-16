@@ -3,3 +3,4 @@ library linkfy_text;
 
 export 'src/enum.dart';
 export 'src/linkify.dart';
+export 'src/model/link.dart';

@@ -2,7 +2,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:linkfy_text/linkfy_text.dart';
-import 'package:linkfy_text/src/model/link.dart';
 
 void main() {
   group('linkifySpan', () {
