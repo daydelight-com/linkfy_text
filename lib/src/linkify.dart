@@ -134,12 +134,13 @@ class LinkifyText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text.rich(
-      _linkify(
-          text: text,
-          linkStyle: linkStyle,
-          onTap: onTap,
-          linkTypes: linkTypes,
-          customLinkStyles: customLinkStyles),
+      linkifySpan(
+        text,
+        linkStyle: linkStyle,
+        onTap: onTap,
+        linkTypes: linkTypes,
+        customLinkStyles: customLinkStyles,
+      ),
       key: key,
       style: textStyle,
       strutStyle: strutStyle,
@@ -331,8 +332,8 @@ class LinkifySelectableText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SelectableText.rich(
-      _linkify(
-        text: text,
+      linkifySpan(
+        text,
         linkStyle: linkStyle,
         onTap: onTap,
         linkTypes: linkTypes,
@@ -368,8 +369,17 @@ class LinkifySelectableText extends StatelessWidget {
   }
 }
 
-TextSpan _linkify({
-  String text = '',
+/// Returns the [TextSpan] that [LinkifyText] and [LinkifySelectableText]
+/// render for [text], so that callers can combine it with other spans
+/// (e.g. inside `TextSpan(children: [...])`) instead of using the widgets.
+///
+/// The plain text of the returned span is always equal to [text]: links are
+/// split out as child spans styled with [customLinkStyles] (falling back to
+/// [linkStyle]) and carry a [TapGestureRecognizer] that calls [onTap].
+/// The recognizers are created on every call and are not disposed, as in
+/// [LinkifyText].
+TextSpan linkifySpan(
+  String text, {
   TextStyle? linkStyle,
   List<LinkType>? linkTypes,
   Map<LinkType, TextStyle>? customLinkStyles,
